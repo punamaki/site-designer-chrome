@@ -1,15 +1,27 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
-  "icons": [
-    {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
-    }
-  ],
-  "start_url": ".",
-  "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "name": "SP SiteDesigner",
+  "version": "0.0.1",
+  "manifest_version": 2,
+  "icons": {
+    "16": "images/chrome-logo-16x16.png",
+    "32": "images/chrome-logo-128x128.png",
+    "48": "images/chrome-logo-128x128.png",
+    "128": "images/chrome-logo-128x128.png"
+  },
+  "description": "SharePoint Site Script Editor",
+  "homepage_url": "https://sitedesigner.io",
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": true
+  },
+  "browser_action": {
+    "default_title": "SP SiteDesigner"
+  },
+  "web_accessible_resources":[
+    "/static/css/main.css",
+    "/static/css/main.css.map",
+    "/static/media/jsoneditor-icons.d961fdfa.svg"
+ ],
+  "permissions": ["https://*/*", "http://*/*", "tabs"],
+  "content_security_policy": "script-src 'self' 'sha256-5As4+3YpY62+l38PsxCEkjB1R4YtyktBtRScTJ3fyLU='; object-src 'self'"
 }

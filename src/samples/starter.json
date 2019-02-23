@@ -1,0 +1,37 @@
+{
+  "$schema": "schema.json",
+  "actions": [
+    {
+      "verb": "setRegionalSettings",
+      "locale": 1033,
+      "sortOrder": 25
+    },
+    {
+      "verb": "addPrincipalToSPGroup",
+      "principal": "ContosoAdmins",
+      "group": "Visitors"
+    },
+    {
+      "verb": "createSPList",
+      "listName": "Employees",
+      "templateType": 100,
+      "subactions": [
+        {
+          "displayName": "Full name",
+          "internalName": "fullName",
+          "isRequired": false,
+          "addToDefaultView": false,
+          "fieldType": "Text",
+          "enforceUnique": false,
+          "verb": "addSPField"
+        },
+        {
+          "verb": "setTitle",
+          "title": "employees"
+        }
+      ]
+    }
+  ],
+  "bindata": {},
+  "version": 1
+}

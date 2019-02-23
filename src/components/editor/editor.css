@@ -1,0 +1,68 @@
+.sd_inline {
+    display: inline-block;
+    margin-bottom: 10px;
+}
+.sd_editor_container {
+    display: flex;
+    flex: 1 1;
+    flex-direction: column;
+}
+
+.sd_export_code_container .hljs {
+    background: inherit;
+
+}
+
+.sd_col_10 {
+    width:10%
+}
+.sd_col_20 {
+    width:20%
+}
+.sd_col_30 {
+    width:30%
+}
+.sd_col_40 {
+    width:40%
+}
+.sd_col_60 {
+    width:60%
+}
+.sd_col_70 {
+    width:70%
+}
+.sd_col_80 {
+    width:80%
+}
+.sd_button {
+    position: relative;
+    font-family: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 14px;
+    font-weight: 400;
+    box-sizing: border-box;
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+    vertical-align: top;
+    padding-top: 0px;
+    padding-right: 16px;
+    padding-bottom: 0px;
+    padding-left: 16px;
+    min-width: 80px;
+    height: 32px;
+    background-color: rgb(216, 221, 228);
+    color: rgb(51, 51, 51);
+    user-select: none;
+    outline: transparent;
+    border-width: 1px;
+    border-style: solid;
+    border-color: transparent;
+    border-image: initial;
+    text-decoration: none;
+    border-radius: 0px;
+    margin-right:10px;
+}
+.sd_button:hover {
+    background-color: rgb(233, 233, 233);
+}
