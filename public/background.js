@@ -3,6 +3,6 @@ chrome.browserAction.onClicked.addListener(function (tab) {
 		file: 'static/js/main.js'
 	});
 	chrome.tabs.insertCSS(tab.ib, {
-		file: 'app.css'
+		file: 'static/css/main.css'
 	});
 });

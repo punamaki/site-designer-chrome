@@ -18,10 +18,17 @@
     "default_title": "SP SiteDesigner"
   },
   "web_accessible_resources":[
+    "/app.css",
     "/static/css/main.css",
     "/static/css/main.css.map",
     "/static/media/jsoneditor-icons.d961fdfa.svg"
  ],
+ "content_scripts": [
+  {
+    "matches": ["<all_urls>"], 
+    "css" : ["/app.css"]
+  }
+],
   "permissions": ["https://*/*", "http://*/*", "tabs"],
   "content_security_policy": "script-src 'self' 'sha256-5As4+3YpY62+l38PsxCEkjB1R4YtyktBtRScTJ3fyLU='; object-src 'self'"
 }
