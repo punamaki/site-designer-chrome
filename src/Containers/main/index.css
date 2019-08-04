@@ -1,3 +1,7 @@
+@import url('https://fonts.googleapis.com/css?family=Work+Sans&display=swap');
+.sd_editor .sd_site_hierarchy_node_title {
+  font-weight: 500;
+}
 .sd_editor button {
   min-width: initial;
 }
@@ -28,4 +32,15 @@
 }
 .sd_editor .sd_site_hierarchy_field {
   font-weight: 500;
+}
+
+.sd_editor input[type=text] {
+  background-color: white;
+border:none;
+}
+.sd_editor input[type=text].ms-TextField-field {
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgb(204, 204, 204);
+  border-image: initial;
 }

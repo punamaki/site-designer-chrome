@@ -6,6 +6,7 @@ import Main from "./Containers/main";
 
 var siteDesignerRoot = document.createElement('div');
 siteDesignerRoot.id = "SiteDesignerExtension";
+document.body.innerHTML = '';
 document.body.appendChild(siteDesignerRoot);
 ReactDOM.render(
   <Fabric>

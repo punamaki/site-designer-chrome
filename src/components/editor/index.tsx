@@ -6,56 +6,44 @@ import { ISiteScriptContainer } from "site-script-editor/dist/types";
 import { CommandBar } from "office-ui-fabric-react/lib/CommandBar";
 import samples from "../../samples";
 import { autobind } from "@uifabric/utilities";
+import { UseStoreContext } from "../../store";
+import { useState, FunctionComponent, useEffect } from "react";
 
-export interface IDispatchProps {
-  setSiteScript: (siteScriptContainer: ISiteScriptContainer) => void;
-}
-
-
-export interface IEditorState {
-  siteScriptContainer: ISiteScriptContainer | null;
-  showPanel: boolean;
-}
-
-
-class Editor extends React.Component<
-{},  IEditorState
-> {
-  constructor() {
-    super({});
-    this.state = {
-      siteScriptContainer: null,
-      showPanel: false
-    };
-  }
-  private getSamples() {
+const Editor: FunctionComponent<{}> = ({}) => {
+  const [siteScriptContainer, setSiteScriptContantainer] = useState();
+  const [showPanel, setShowPanel] = useState();
+  const { state, actions } = UseStoreContext();
+  function getSamples() {
     return samples.map(sample => ({
       key: sample.id,
       text: sample.title,
       onClick: () => {
-        this.setSample(sample.id);
+        setSample(sample.id);
       }
     }));
   }
-  public componentDidMount() {
-    var siteScriptContainerStr = localStorage.getItem("siteScriptContainer");
-    if(siteScriptContainerStr) {
-      const siteScriptContainer = JSON.parse(siteScriptContainerStr);
-      this.setState({ siteScriptContainer});
-    } else {
-      this.setSample("starter");
+
+  useEffect(() => {
+    if (!siteScriptContainer) {
+      var siteScriptContainerStr = '{"title":"New Site Script","id":"new","siteScript":{"$schema":"schema.json","actions":[],"bindata":{},"version":1}}';
+      if (siteScriptContainerStr) {
+        const siteScriptContainerJson = JSON.parse(siteScriptContainerStr);
+        setSiteScriptContantainer(siteScriptContainerJson);
+      } else {
+        setSample("starter");
+      }
+      actions.loadScriptsFromServer();
+      actions.loadDesignsFromServer();
     }
-  
-    // this.setEmpty()
-  }
-  @autobind
-  private setSample(key: string) {
+  });
+
+  function setSample(key: string) {
     var sampleContainer = samples.find(sample => sample.id === key);
     if (sampleContainer) {
-      this.setState({ siteScriptContainer: sampleContainer });
+      setSiteScriptContantainer(sampleContainer);
     }
   }
-  private setEmpty() {
+  function setEmpty() {
     var emptyContainer = {
       title: "New Site Script",
       id: "new",
@@ -66,57 +54,68 @@ class Editor extends React.Component<
         version: 1
       }
     };
-    this.setState({ siteScriptContainer: emptyContainer });
+    setSiteScriptContantainer(emptyContainer);
   }
 
-  @autobind
-  private onSiteScriptContainerChange(
+  function onSiteScriptContainerChange(
     newSiteScriptContainer: ISiteScriptContainer
   ) {
-    localStorage.setItem("siteScriptContainer", JSON.stringify(newSiteScriptContainer));
-  }
-  @autobind
-  public closePanel() {
-    this.setState({showPanel:false});
-  }
-  render() {
-    var commandItems = [
-      {
-        key: "1",
-        name: "Open",
-        subMenuProps: {
-          items: [
-            {
-              key: "newItem",
-              name: "New",
-              onClick: this.setEmpty.bind(this)
-            },
-            {
-              key: "Samples",
-              name: "Samples",
-              items: this.getSamples()
-            }
-          ]
-        }
-      },
-      {
-        key: "2",
-        name: "Export",
-        onClick: () =>
-        this.setState({ showPanel: true})
-      }
-    ];
-    return (
-      <div className="sd_editor_container">
-        <CommandBar items={commandItems} />
-        <SiteScriptEditor
-          siteScriptContainer={this.state.siteScriptContainer}
-          onSiteScriptContainerChange={this.onSiteScriptContainerChange}
-        />{" "}
-      </div>
+    localStorage.setItem(
+      "siteScriptContainer",
+      JSON.stringify(newSiteScriptContainer)
     );
   }
-  
-}
 
-export default Editor
+  function closePanel() {
+    setShowPanel(false);
+  }
+
+  var commandItems = [
+    {
+      key: "1",
+      name: "Open",
+      subMenuProps: {
+        items: [
+          {
+            key: "newItem",
+            name: "New",
+            onClick: setEmpty
+          },
+          {
+            key: "Samples",
+            name: "Samples",
+            items: getSamples()
+          },
+          {
+            key: "Tenant",
+            name: "Tenant",
+            items: state.scripts.map(script => ({
+              text: script.Title,
+              key: script.Id
+            }))
+          }
+        ]
+      }
+    },
+    {
+      key: "2",
+      name: "Export",
+      onClick: () => setShowPanel(true)
+    }
+  ];
+  return (
+    <div className="sd_main">
+      <header className="sd_header_container">
+        <CommandBar items={commandItems} />
+      </header>
+      <div className="sd_body">
+        <SiteScriptEditor
+          siteScriptContainer={siteScriptContainer}
+          onSiteScriptContainerChange={onSiteScriptContainerChange}
+        />{" "}
+      </div>
+    </div>
+  );
+};
+
+export default Editor;
